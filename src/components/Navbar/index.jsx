@@ -113,7 +113,7 @@ export default function Navbar({ pokemonFilter }) {
             <Box component="img" src="/assets/pokemon-logo.png" height="3em" />
             <div>
             {favoritePokemons.length} ❤️
-            <Button variant="outlined" onClick={handleClickOpen} sx={{ backgroundColor: "black" }}>
+            <Button variant="outlined" onClick={handleClickOpen} sx={{ backgroundColor: "white" }}>
         Ver Pokemons Favoritos
       </Button>
       <BootstrapDialog

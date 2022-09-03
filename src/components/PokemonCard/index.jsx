@@ -80,13 +80,13 @@ export default function PokemonCard({ name, image, types, moves, abilities }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography sx={{ backgroundColor: "Green" }} gutterBottom variant="h6" component="div">
               {typeHandler()}
             </Typography>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography sx={{ backgroundColor: "#00beff" }} gutterBottom variant="h6" component="div">
            {moveHandler()}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography sx={{ backgroundColor: "orange" }} gutterBottom variant="h6" component="div">
            {abilitiesHandler()}
           </Typography>
         </CardContent>
