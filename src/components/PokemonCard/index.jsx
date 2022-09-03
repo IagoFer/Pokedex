@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useContext} from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,6 +9,7 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteContext from "../../contexts/favoriteContext"
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -26,6 +27,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function PokemonCard({ name, image, types, moves }) {
+  const {favoritePokemons, updateFavoritePokemons} = useContext(FavoriteContext)
+  const favoriteClick = () => {
+    updateFavoritePokemons(name)
+  }
+  const heart = favoritePokemons.includes(name) ? "❤️" : "🖤";
   const typeHandler = () => {
     if (types[1]) {
       return "Type Pokemon:" + types[0].type.name + " and " + types[1].type.name;
@@ -49,6 +55,9 @@ export default function PokemonCard({ name, image, types, moves }) {
       <CardActionArea>
       <Typography gutterBottom variant="h4" component="div">
               {name}
+              <IconButton onClick={favoriteClick} >
+            {heart}
+            </IconButton>
             </Typography>
         <CardMedia component="img" height="250" image={image} alt="Pokemon" />
         <CardContent>
