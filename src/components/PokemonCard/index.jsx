@@ -26,7 +26,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function PokemonCard({ name, image, types, moves }) {
+export default function PokemonCard({ name, image, types, moves, abilities }) {
   const {favoritePokemons, updateFavoritePokemons} = useContext(FavoriteContext)
   const favoriteClick = () => {
     updateFavoritePokemons(name)
@@ -34,15 +34,21 @@ export default function PokemonCard({ name, image, types, moves }) {
   const heart = favoritePokemons.includes(name) ? "❤️" : "🖤";
   const typeHandler = () => {
     if (types[1]) {
-      return "Type Pokemon:" + types[0].type.name + " and " + types[1].type.name;
+      return "POKEMON TYPE : " + types[0].type.name + " and " + types[1].type.name;
     }
-    return "Type Pokemon:" + types[0].type.name;
+    return "POKEMON TYPE : " + types[0].type.name;
   };
   const moveHandler = () => {
     if (moves[1]) {
-      return "Pokemon skills:" + moves[0].move.name + " , " + moves[1].move.name + " and " + moves[2].move.name ;
+      return "POKEMON MOVES : " + moves[0].move.name + " , " + moves[1].move.name + " and " + moves[2].move.name ;
     }
-    return "Pokemon skills:" + moves[0].move.name;
+    return "POKEMON MOVES : " + moves[0].move.name;
+  };
+  const abilitiesHandler = () => {
+    if (abilities[1]) {
+      return "POKEMON POWERS : " + abilities[0].ability.name + " , " + abilities[1].ability.name
+    }
+    return "POKEMON POWERS : " + abilities[0].ability.name;
   };
   const [expanded, setExpanded] = React.useState(false);
 
@@ -79,6 +85,9 @@ export default function PokemonCard({ name, image, types, moves }) {
             </Typography>
           <Typography gutterBottom variant="h6" component="div">
            {moveHandler()}
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div">
+           {abilitiesHandler()}
           </Typography>
         </CardContent>
       </Collapse>
