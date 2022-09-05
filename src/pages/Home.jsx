@@ -7,7 +7,7 @@ import PokemonCard from "../components/PokemonCard";
 import { Skeletons } from "../components/Skeletons";
 import { FavoriteProvider } from "../contexts/favoriteContext";
 
-const favoritesKey = "f"
+const favoritesKey = "f";
 export const Home = () => {
   const [pokemons, setPokemons] = useState([]);
   useEffect(() => {
@@ -19,7 +19,9 @@ export const Home = () => {
     for (var i = 1; i < 200; i++) {
       endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}/`);
     }
-    axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then((res) => setPokemons(res));
+    axios
+      .all(endpoints.map((endpoint) => axios.get(endpoint)))
+      .then((res) => setPokemons(res));
   };
   const [favorites, setFavorites] = useState([]);
 
@@ -38,49 +40,56 @@ export const Home = () => {
   };
 
   const loadFavoritePokemons = () => {
-    const pokemons = JSON.parse(window.localStorage.getItem(favoritesKey)) || []
-    setFavorites(pokemons)
-  }
+    const pokemons =
+      JSON.parse(window.localStorage.getItem(favoritesKey)) || [];
+    setFavorites(pokemons);
+  };
 
   useEffect(() => {
-    loadFavoritePokemons()
+    loadFavoritePokemons();
   }, []);
 
   const updateFavoritePokemons = (name) => {
-    const updatedFavorites = [...favorites]
-    const favoriteIndex = favorites.indexOf(name)
-    if(favoriteIndex >= 0) {
+    const updatedFavorites = [...favorites];
+    const favoriteIndex = favorites.indexOf(name);
+    if (favoriteIndex >= 0) {
       updatedFavorites.splice(favoriteIndex, 1);
-    }else {
+    } else {
       updatedFavorites.push(name);
     }
-    window.localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites))
+    window.localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
     setFavorites(updatedFavorites);
-  }
+  };
 
   return (
     <FavoriteProvider
-           value={{
+      value={{
         favoritePokemons: favorites,
         updateFavoritePokemons: updateFavoritePokemons,
       }}
-      >
-    <div>
-      <Navbar pokemonFilter={pokemonFilter} />
-      <Container maxWidth={false}>
-        <Grid container spacing={3}>
-          {pokemons.length === 0 ? (
-            <Skeletons />
-          ) : (
-            pokemons.map((pokemon, key) => (
-              <Grid item xs={12} sm={6} md={4} lg={2} key={key}>
-                <PokemonCard name={pokemon.data.name} image={pokemon.data.sprites.front_default} types={pokemon.data.types} moves={pokemon.data.moves} abilities={pokemon.data.abilities} />
-              </Grid>
-            ))
-          )}
-        </Grid>
-      </Container>
-    </div>
+    >
+      <div>
+        <Navbar pokemonFilter={pokemonFilter} />
+        <Container maxWidth={false}>
+          <Grid container spacing={3}>
+            {pokemons.length === 0 ? (
+              <Skeletons />
+            ) : (
+              pokemons.map((pokemon, key) => (
+                <Grid item xs={12} sm={6} md={4} lg={2} key={key}>
+                  <PokemonCard
+                    name={pokemon.data.name}
+                    image={pokemon.data.sprites.front_default}
+                    types={pokemon.data.types}
+                    moves={pokemon.data.moves}
+                    abilities={pokemon.data.abilities}
+                  />
+                </Grid>
+              ))
+            )}
+          </Grid>
+        </Container>
+      </div>
     </FavoriteProvider>
   );
 };
